@@ -41,7 +41,7 @@ action "Deploy" {
 
 ## Requirements
 
-You must pass at least one argument, the path to the directory you want to push. This is usually the output folder of a static site generator. If you want it to be the current directory, just pass `.`. You must also include the `GITHUB_TOKEN` secret, otherwise uploading the file will not work.
+You must pass at least one argument, the path to the directory you want to push. This is usually the output folder of a static site generator. If you want it to be the current directory, just pass `.`. You must also include the `GITHUB_TOKEN` secret, otherwise the Action won't be able to push to the branch.
 
 ```workflow
 action "Deploy" {
