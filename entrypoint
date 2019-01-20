@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -e
+set -o pipefail
+
+# Ensure that the GITHUB_TOKEN secret is included
+if [[ -z "$GITHUB_TOKEN" ]]; then
+  echo "Set the GITHUB_TOKEN env variable."
+  exit 1
+fi
+
+# Ensure that the directory path is present
+if [[ -z "$1" ]]; then
+  echo "You must pass at least one argument to this action, the path to the directory to push."
+  exit 1
+fi
+
+cd $1
+
+remote_repo="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+remote_branch="gh-pages"
+
+git init
+git config user.name "${GITHUB_ACTOR}"
+git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+git add .
+
+echo -n 'Files to Commit:' && ls -l | wc -l
+
+git commit -m "GitHub Action - Automated build"
+git push --force $remote_repo master:$remote_branch
